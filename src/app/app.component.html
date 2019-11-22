@@ -1,0 +1,136 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav [mode]="mode.value" style="width:300px;">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <i class="icon-menu"></i>
+          Layout
+        </ng-template>
+        <mat-grid-list cols="2" rowHeight="2:1">
+          <mat-grid-tile>
+            <button mat-button color="primary"><i class="icon-plus-squared" style="font-size:24px;"></i>
+              Section</button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button mat-button color="primary"><i class="icon-plus-squared" style="font-size:24px;"></i>
+              Container</button>
+          </mat-grid-tile>
+          <mat-grid-tile>3</mat-grid-tile>
+          <mat-grid-tile>4</mat-grid-tile>
+        </mat-grid-list>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <i class="icon-menu"></i>
+          Element
+        </ng-template>
+        Content 2
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <i class="icon-menu"></i>
+          Settings
+        </ng-template>
+
+        Content 3
+      </mat-tab>
+    </mat-tab-group>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-menu #pageEditMenu="matMenu">
+      <ng-template matMenuContent let-page="page">
+        <button mat-menu-item (click)="confirmChangePage(page)"><span><mat-icon>play_arrow</mat-icon><span>Open</span></span></button>
+        <button mat-menu-item (click)="confirmChangePage(page)"><mat-icon>delete_forever</mat-icon><span>Delete</span></button>
+      </ng-template>
+    </mat-menu>
+    <mat-toolbar color="primary">
+      <button mat-button *ngIf="1 === 2" color="accent" (click)="sidenav.toggle()"><i class="icon-menu"></i></button>
+      <button mat-button [matMenuTriggerFor]="menu">File</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="pagemenu"><mat-icon>menu</mat-icon><span>Pages</span></button>
+        <mat-menu #pagemenu="matMenu">
+          <button mat-menu-item *ngFor="let page of pages" [matMenuTriggerFor]="pageEditMenu"
+            [matMenuTriggerData]="{page:page}"><mat-icon>menu</mat-icon><span>{{page.title}}</span></button>
+        </mat-menu>
+        <button mat-menu-item (click)="confirmNewPageDialog()"><mat-icon>note_add</mat-icon><span>New Page</span></button>
+        <button *ngIf="currentPage !== null" mat-menu-item (click)="savePage()"><mat-icon>save</mat-icon><span>Save Page</span></button>
+      </mat-menu>
+      <button *ngIf="currentPage !== null" mat-button (click)="editPage()">Properties</button>
+      <span class="fill-space"></span>
+      <button mat-button>View</button>
+      <div style="position: relative;">
+        <div
+          style="position: absolute;top: -12px;font-size: 10px;width: 100%;display: flex;justify-content: space-between;">
+          <i class="icon-desktop"></i>
+          <i class="icon-tablet"></i>
+          <i class="icon-mobile"></i>
+        </div>
+        <div>
+          <mat-slider class="md-top-right" min="1" max="3" step="1" [value]="viewport"
+            (input)="setViewport($event.value)" style="margin:0 !important;"></mat-slider>
+
+        </div>
+      </div>
+      &nbsp;
+      <button matTooltip="Add Section" *ngIf="currentPage !== null" mat-mini-fab color="accent"
+        (click)="addSection()"><i class="icon-plus"></i></button>
+    </mat-toolbar>
+    <div id="evovRuler" class="evov-ruler">
+      <div id="evovRulerTop" class="evov-ruler-top">
+        <ul class="evov-numbers">
+          <li>-1,400</li>
+          <li>-1,300</li>
+          <li>-1,200</li>
+          <li>-1,100</li>
+          <li>-1,000</li>
+          <li>-900</li>
+          <li>-800</li>
+          <li>-700</li>
+          <li>-600</li>
+          <li>-500</li>
+          <li>-400</li>
+          <li>-300</li>
+          <li>-200</li>
+          <li>-100</li>
+          <li>0</li>
+          <li>100</li>
+          <li>200</li>
+          <li>300</li>
+          <li>400</li>
+          <li>500</li>
+          <li>600</li>
+          <li>700</li>
+          <li>800</li>
+          <li>900</li>
+          <li>1,000</li>
+          <li>1,100</li>
+          <li>1,200</li>
+          <li>1,300</li>
+          <li>1,400</li>
+          <li>1,500</li>
+          <li>1,600</li>
+          <li>1,700</li>
+          <li>1,800</li>
+          <li>1,900</li>
+          <li>2,000</li>
+          <li>2,100</li>
+          <li>2,200</li>
+          <li>2,300</li>
+          <li>2,400</li>
+          <li>2,500</li>
+          <li>2,600</li>
+        </ul>
+      </div>
+    </div>
+    <page *ngIf="currentPage !== null" [page]="currentPage">
+
+    </page>
+  </mat-sidenav-content>
+</mat-sidenav-container>

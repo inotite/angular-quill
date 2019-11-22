@@ -1,0 +1,35 @@
+<div cdkDrag class="mat-elevation-z2 property-panel"
+    style="overflow:hidden;min-height: 300px;display:flex;flex-direction: column">
+    <mat-toolbar color="accent" cdkDragHandle>
+        <button mat-button [matMenuTriggerFor]="menu"><i class="icon-menu"></i></button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="removeElement()"><i class="icon-minus"></i> Remove Element</button>
+        </mat-menu>
+        <button matTooltip="Move up" *ngIf="container.elements.indexOf(element) !== 0"  style="min-width:35px;padding:0 5px;" mat-button (click)="moveUp()"><i class="icon-angle-up"></i></button>
+        <button matTooltip="Move down" *ngIf="container.elements.indexOf(element) !== container.elements.length - 1"  style="min-width:35px;padding:0 5px;" mat-button (click)="moveDown()"><i class="icon-angle-down"></i></button>
+
+        <div class="fill-space"></div>
+        <button mat-button (click)="closePanel($event)"><i class="icon-cancel"></i></button>
+    </mat-toolbar>
+    <div class="property-panel-body">
+        <quill-editor [style]="{height:'100px'}" format="html" [ngModel]="element.content" *ngIf="element.type==='h1' || element.type==='h2' || element.type==='h3' || element.type==='h4' || element.type==='h5' || element.type==='h6' || element.type==='text'"
+            (onContentChanged)="setHtmlContent($event)">
+            <div quill-editor-toolbar>
+                <span class="ql-formats">
+                    <button class="ql-bold" [title]="'Bold'"></button>
+                    <button class="ql-italic" [title]="'Italic'"></button>
+                    <button class="ql-underline" [title]="'Undeline'"></button>
+                </span>
+                <span class="ql-formats">
+                    <select class="ql-align" [title]="'Aligment'">
+                        <option selected></option>
+                        <option value="center"></option>
+                        <option value="right"></option>
+                        <option value="justify"></option>
+                    </select>
+                </span>
+            </div>
+        </quill-editor>
+    </div>
+
+</div>

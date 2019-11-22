@@ -1,0 +1,140 @@
+<div class="columns">
+    <div class="column">
+        <mat-vertical-stepper linear #stepper>
+            <mat-step [stepControl]="firstFormGroup" [editable]="true">
+                <ng-template matStepLabel>Select Staff</ng-template>
+                <br />
+                <br />
+                <mat-list role="list" style="max-width:400px;">
+                        <mat-list-item *ngFor="let employee of employees" role="listitem">
+                            <h2 matLine><i class="icon-user"></i> <button mat-button color="primary"
+                                    (click)="setEmployee(employee, stepper)"> {{employee.firstName}} {{employee.lastName}}
+                                </button></h2>
+                            <mat-divider></mat-divider>
+                        </mat-list-item>
+                    </mat-list>
+                
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" [editable]="true">
+                <ng-template matStepLabel>Your Info</ng-template>
+                <br />
+                <br />
+                <form class="is-flex" style="flex-direction: column;max-width:600px;" [formGroup]="secondFormGroup">
+                        <mat-form-field>
+                            <mat-select placeholder="Location" formControlName="locationId"
+                                [(ngModel)]="appointment.locationId" required>
+                                <mat-option *ngFor="let location of locations" value="{{location.id}}">
+                                    {{location.address}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="Services" multiple formControlName="services"
+                                [(ngModel)]="appointment.services" required>
+                                <mat-option *ngFor="let service of services" [value]="service">
+                                    {{service.name}} {{service.price | currency}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="First Name" formControlName="firstName"
+                                [(ngModel)]="appointment.firstName" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Last Name" formControlName="lastName"
+                                [(ngModel)]="appointment.lastName" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Phone Number" formControlName="phoneNumber"
+                                [(ngModel)]="appointment.phoneNumber" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Email Address" formControlName="email"
+                                [(ngModel)]="appointment.email" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <textarea matInput placeholder="Comment" formControlName="comment"
+                                [(ngModel)]="appointment.comment"></textarea>
+                        </mat-form-field>
+                        <div class="has-text-right">
+                                <button mat-flat-button matStepperPrevious>Back</button>
+                                <button mat-flat-button color="primary" matStepperNext>Next</button>
+                        </div>
+                    </form>
+            </mat-step>
+            <mat-step [stepControl]="thirdFormGroup" [editable]="true">
+                <ng-template matStepLabel>Date & Time</ng-template>
+                <br />
+                <br />
+                <div class="columns">
+                    <div class="column">
+                            <div style="max-width: 600px;">
+                                    <mat-form-field class="example-full-width">
+                                            <input matInput [matDatepickerFilter]="scheduleFilter" [matDatepicker]="picker"
+                                                placeholder="Choose a date" (dateChange)="setDate($event)"
+                                                [(ngModel)]="selectedDate">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                        <mat-grid-list cols="4" rowHeight="3:1" style="max-width: 385px;">
+                                            <mat-grid-tile *ngFor="let availableTimeSlot of availableTimeSlots">
+                                                <button (click)="setTime(availableTimeSlot)"
+                                                    *ngIf="availableTimeSlot.getFullYear() !== 2299" mat-button
+                                                    color="primary">{{availableTimeSlot.getTime() | date : 'h:mm a'}}</button>
+                                                <button (click)="setTime(availableTimeSlot)"
+                                                    *ngIf="availableTimeSlot.getFullYear() === 2299" disabled="true" mat-button
+                                                    color="primary">{{availableTimeSlot.getTime() | date : 'h:mm a'}}</button>
+                                            </mat-grid-tile>
+                                        </mat-grid-list>
+                                        <div class="has-text-right" style="max-width: 385px;">
+                                                <button mat-flat-button matStepperPrevious>Back</button>
+                                                <button mat-flat-button color="primary" (click)="gotoReviewStep(stepper)">Next</button>
+                                        </div>
+                            </div>
+                    </div>
+
+
+                </div>
+            </mat-step>
+            <mat-step [stepControl]="fourthFormGroup" [editable]="true">
+                <ng-template matStepLabel>Review</ng-template>
+                <br/>
+                <br/>
+                <div class="columns">
+                        <div class=column>
+                                <mat-card style="max-width: 600px;">
+                                    <mat-card-header>
+                                        <mat-card-title>Appointment Details</mat-card-title>
+                                        <mat-card-subtitle>{{appointment.firstName}} {{appointment.lastName}}
+                                        </mat-card-subtitle>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <hr />
+                                        <div>
+                                            Phone: {{appointment.phoneNumber}}<br />
+                                            Email: {{appointment.email}}
+                                        </div>
+                                        <br />
+                                        <div *ngIf="appointment.startTime !== null">
+                                            <h4>Date/Time</h4>
+                                            {{selectedDate | date: 'MM/dd/yyyy h:mm a'}}
+                                        </div>
+                                        <br />
+                                        <h4>Services</h4>
+                                        <mat-chip-list>
+                                            <mat-chip *ngFor="let service of appointment?.services">{{service.name}}
+                                                {{service.price | currency}}</mat-chip>
+                                        </mat-chip-list>
+                                    </mat-card-content>
+                                    <mat-card-actions>
+                                        <hr />
+                                        <button mat-flat-button matStepperPrevious>Back</button>
+                                        <button mat-flat-button color="primary" (click)="bookAppointment(picker,stepper)">Book
+                                            Appointment</button>
+                                    </mat-card-actions>
+                                </mat-card>
+                            </div>
+                </div>
+            </mat-step>
+        </mat-vertical-stepper>
+    </div>
+</div>

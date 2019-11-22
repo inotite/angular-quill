@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>
+        <span *ngIf="data.id === 0">New Page</span>
+        <span *ngIf="data.id === 0">Edit Page</span>
+</h1>
+<div mat-dialog-content>
+        <div class="columns">
+            <div class="column" style="display:flex;flex-direction: column;">
+                    <mat-form-field>
+                            <input placeholder="Page Name" matInput [(ngModel)]="data.name">
+                    </mat-form-field>
+                    <mat-form-field>
+                            <input placeholder="Page Title" matInput [(ngModel)]="data.title">
+                    </mat-form-field>
+                    <mat-form-field>
+                            <input placeholder="SEO Keywords" matInput [(ngModel)]="data.seoKeywords">
+                    </mat-form-field>
+                    <mat-checkbox color="primary" [(ngModel)]="data.isDefault">Home Page</mat-checkbox>
+                    <mat-checkbox color="primary" [(ngModel)]="data.isMenu">Add To Navigation</mat-checkbox>
+            </div>
+        </div>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="null" >Close</button>
+    <button mat-button *ngIf="data.id === 0" (click)="addPage()" cdkFocusInitial>Create</button>
+    <button mat-button *ngIf="data.id !== 0" (click)="updatePage()" cdkFocusInitial>Update</button>
+</mat-dialog-actions>

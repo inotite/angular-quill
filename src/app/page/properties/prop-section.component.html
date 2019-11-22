@@ -1,0 +1,75 @@
+<div cdkDrag class="mat-elevation-z2 property-panel" style="color:initial;">
+
+        <mat-toolbar cdkDragHandle color="accent">
+                <button style="min-width:35px;padding:0 5px;" mat-button [matMenuTriggerFor]="menu"><i
+                                class="icon-menu"></i></button>
+                <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="addContainer()"><i class="icon-plus"></i> Add Container</button>
+                        <button mat-menu-item (click)="confirmRemove()"><i class="icon-minus"></i> Remove
+                                Section</button>
+                </mat-menu>
+                <button matTooltip="Move up" *ngIf="page.sections.indexOf(section) !== 0"
+                        style="min-width:35px;padding:0 5px;" mat-button (click)="moveUp()"><i
+                                class="icon-angle-up"></i></button>
+                <button matTooltip="Move down" *ngIf="page.sections.indexOf(section) !== page.sections.length - 1"
+                        style="min-width:35px;padding:0 5px;" mat-button (click)="moveDown()"><i
+                                class="icon-angle-down"></i></button>
+
+                <span class="fill-space"></span>
+                <button matTooltip="Close panel" style="min-width:35px;padding:0 5px;" mat-button
+                        (click)="closePanel($event)"><i class="icon-cancel"></i></button>
+        </mat-toolbar>
+        <div class="property-panel-body">
+                <mat-form-field>
+                        <mat-select placeholder="Section Type" [(ngModel)]="section.containerType">
+                                <mat-option value="container">Centered</mat-option>
+                                <mat-option value="container is-fluid">Fluid</mat-option>
+                        </mat-select>
+                </mat-form-field>
+                <div class="columns">
+                        <div class="column" style="flex-direction: column;">
+                                <div>Background</div>
+                                <mcc-color-picker [hideButtons]="true" [selectedColor]="bgColor"
+                                        (change)="updateStyle($event,'background-color')">
+                                </mcc-color-picker>
+
+                        </div>
+                        <div class="column">
+                                <div>Foreground</div>
+                                <mcc-color-picker [hideButtons]="true" [selectedColor]="fgColor"
+                                        (change)="updateStyle($event, 'color')">
+                                </mcc-color-picker>
+                        </div>
+                </div>
+                <div>
+                        <mat-form-field>
+                                <input matInput type="number" style="text-align: right;" [(ngModel)]="height"
+                                        (input)="updateStyle($event.srcElement,'min-height')">
+                                <span matPrefix>Height&nbsp;&nbsp;</span>
+                        </mat-form-field>
+                </div>
+                <div>
+                        <mat-form-field>
+                                <mat-select [(ngModel)]="vAlign" placeholder="Vertical Align"
+                                        (selectionChange)="updateStyle($event.value, 'align-content')">
+                                        <mat-option value="stretch">Default</mat-option>
+                                        <mat-option value="flex-start">Top</mat-option>
+                                        <mat-option value="center">Middle</mat-option>
+                                        <mat-option value="flex-end">Bottom</mat-option>
+
+                                </mat-select>
+                        </mat-form-field>
+                </div>
+                <div>
+                        <mat-form-field>
+                                <mat-select [(ngModel)]="hAlign" placeholder="Horizontal Align"
+                                        (selectionChange)="updateStyle($event.value, 'justify-content')">
+                                        <mat-option value="stretch">Default</mat-option>
+                                        <mat-option value="flex-start">Left</mat-option>
+                                        <mat-option value="center">Center</mat-option>
+                                        <mat-option value="flex-end">Right</mat-option>
+                                </mat-select>
+                        </mat-form-field>
+                </div>
+        </div>
+</div>

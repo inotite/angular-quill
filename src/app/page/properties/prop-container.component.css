@@ -1,0 +1,13 @@
+.mat-tab-label {
+    min-width: 100px !important;
+}
+.mat-tab-body-content{
+    padding:20px;
+    height: 200px;
+    overflow-y: auto;
+    overflow-x:hidden;
+}
+.mat-slider-horizontal{
+    margin-top:20px;
+    display: flex;
+}

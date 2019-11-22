@@ -1,0 +1,83 @@
+<div cdkDrag class="mat-elevation-z2 property-panel"
+    style="overflow:hidden;min-height: 300px;display:flex;flex-direction: column">
+    <mat-toolbar color="accent" cdkDragHandle>
+        <button mat-button [matMenuTriggerFor]="menu"><i class="icon-menu"></i></button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="confirmRemove()"><i class="icon-minus"></i> Remove Container</button>
+        </mat-menu>
+        <button matTooltip="Move up" *ngIf="section.containers.indexOf(container) !== 0"  style="min-width:35px;padding:0 5px;" mat-button (click)="moveUp()"><i class="icon-angle-up"></i></button>
+        <button matTooltip="Move down" *ngIf="section.containers.indexOf(container) !== section.containers.length - 1"  style="min-width:35px;padding:0 5px;" mat-button (click)="moveDown()"><i class="icon-angle-down"></i></button>
+
+        <div class="fill-space">
+
+        </div>
+        <button mat-button (click)="closePanel($event)"><i class="icon-cancel"></i></button>
+    </mat-toolbar>
+    <div style="background-color:white;height:100%;overflow-y:hidden;flex:1;">
+        <mat-tab-group>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <i class="icon-cog"></i> Settings
+                </ng-template>
+                <div>Width</div>
+                <div *ngIf="globals.viewport===1">
+                    <mat-slider (input)="container.desktopWidth = $event.value" [value]="container.desktopWidth"
+                        thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="12"></mat-slider>
+                </div>
+                <div *ngIf="globals.viewport===2">
+                    <mat-slider (input)="container.tabletWidth = $event.value" [value]="container.desktopWidth"
+                        thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="12"></mat-slider>
+                </div>
+                <div *ngIf="globals.viewport===3">
+                    <mat-slider (input)="container.mobileWidth = $event.value" [value]="container.desktopWidth"
+                        thumbLabel [displayWith]="formatLabel" tickInterval="1" min="1" max="12"></mat-slider>
+                </div>
+
+
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <i class="icon-plus"></i> Elements
+                </ng-template>
+                <mat-grid-list cols="3">
+                    <mat-grid-tile>
+                        <button mat-button (click)="addElement('h2')">
+                            <i class="icon-header"></i> <span>Title</span>
+                        </button>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <button mat-button (click)="addElement('text')">
+                                <i class="icon-doc-text"></i> <span>Text</span>
+                        </button>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <button mat-button (click)="addElement('image')">
+                                <i class="icon-file-image"></i> <span>Image</span>
+                        </button>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <button mat-button>
+                                <i class="icon-video-1"></i> <span>Video</span>
+                        </button>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <button mat-button>
+                                <i class="icon-switch" style="transform:rotate(90deg);"></i> <span>Spacer</span>
+                        </button>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <button mat-button>
+                            <i class="icon-header"></i> <span>6</span>
+                        </button>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                            <button mat-button (click)="addElement('appointment')">
+                                    <i class="icon-calendar"></i> <span>Appointment</span>
+                            </button>
+                        </mat-grid-tile>
+                </mat-grid-list>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+</div>

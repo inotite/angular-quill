@@ -1,0 +1,152 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+@import "./assets/css/evov.css";
+@import "./assets/css/bulma.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "../node_modules/quill/dist/quill.snow.css";
+@include mat-core();
+
+.fill-space {
+  flex: 1 1 auto;
+}
+html,body{
+  overflow: hidden;
+}
+html,
+body,
+mat-sidenav-container {
+  height: 100%;
+}
+
+.property-panel {
+  width: 300px;
+  height: auto;
+  max-height: 300px;
+  display: flex;
+  flex-direction: column;
+  overflow:hidden;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  position: fixed;
+  background-color:white;
+  .property-panel-body {
+    padding:32px;
+    flex: 1;
+    overflow-y:auto;
+    mat-form-field{
+      width:100%;
+    }
+  }
+  .property-panel-footer{
+    padding: 10px 32px;
+  }
+}
+@mixin elementType($type) {
+    content: $type;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    background-color: #dadada;
+    color: white;
+    padding: 0 2px;
+    font-size: 9px;
+}
+*[data-type=section]{
+  &:before{
+    @include elementType("section")
+  }
+}
+*[data-type=container]{
+  &:before{
+    @include elementType("container")
+  }
+}
+.evov-ruler {
+  width: 100.00200000000001%;
+  .evov-ruler-top {
+    background: url(https://d3r4tb575cotg3.cloudfront.net/images/ruler_horizontal_repeat.png);
+    background-position: 0px 0px;
+    width: 4000px;
+    height: 22px;
+    position: fixed;
+    top: 55px;
+    left: 50%;
+    margin-left: -1970px;
+    z-index: 6;
+    background-size: 100px;
+    ul.evov-numbers {
+      box-sizing: content-box;
+      position: fixed;
+      left: 50%;
+      display: flex;
+      margin-left: -2120px;
+      list-style: none;
+      top: 50px;
+      li {
+        display: inline-block;
+        color: black;
+        width: 42px;
+        font-size: 9px;
+        padding: 1px 29px;
+        text-align: center;
+      }
+    }
+  }
+}
+.evov-element {
+  outline: 1px dashed rgb(226, 226, 226);
+  min-height: 50px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  &.column{
+    padding:20px;
+  }
+  & > prop-section {
+    display: none;
+  }
+  & > prop-container {
+    display: none;
+    color:initial;
+  }
+  & > prop-element {
+    display: none;
+  }
+  &.active {
+    outline: 1px solid #3f51b5;
+    & > prop-section {
+      display: initial;
+    }
+    & > prop-container {
+      display: initial;
+    }
+    & > prop-element {
+      display: initial;
+    }
+  }
+}
+.content h2:not(:first-child) {
+  margin-top: 0;
+}
+.container, .container-fluid{width:100%;}
+.ql-align-center {
+  text-align: center;
+}
+.ql-align-justify {
+  text-align: justify;
+}
+.ql-align-right {
+  text-align: right;
+}
+
+.mat-grid-tile .mat-figure {
+  flex-direction: column;
+}
+.mat-step-header {
+  pointer-events: none !important;
+}
+mcc-color-picker-selector{box-sizing:content-box;}
+.btn-picker{
+  position: relative;
+}
